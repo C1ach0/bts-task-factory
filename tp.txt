@@ -1,0 +1,46 @@
+Travail à faire: Préparation
+1. Préparation : Reprenez le mini projet agenda et assurez vous d’avoir réalisé une interface TaskDAO
+qui reprend chacune des méthodes de persistance et recherche des Tasks. « Refactorez si besoin» votre
+projet, pour que votre ancienne classe TaskDAO
+devienne TaskDAOMysql et qu’elle implémente
+TaskDAO. Vous ferez de même avec
+TaskDAOh2.
+Vous devez obtenir l’architecture suivante :
+Travail à faire: La factory
+2. Ecrivez le code d’une classe Factory ConfigurableFactoryTaskDAO qui aura la charge de fournir
+l’une ou l’autre des DAO en fonction des propriétés « properties » lues dans un fichier
+application.properties.
+8 / 10
+D-Fiard - CoursJava-ChargementInstanceClassREFLECT-2025-12 - SIO – SLAM-BLOC 2
+Sa méthode : public TaskDAO createTaskDAO( ) renverra sous le prisme d’une TaskDAO, soit un
+Objet TaskDAOMysql , soit TaskDAOH2 . L’instanciation concrète se faisant en fonction des
+informations de configurations fournies dans le fichier
+application.properties.
+Cette solution permettra dans l’avenir, de créer de nouvelles
+DAO sans avoir à toucher au code des éléments principaux
+du projet, et de les charger dynamiquement.
+Contraintes : ConfigurableFactoryTaskDAO
+- Classe singleton.
+- méthode getInstanceFactory → instance unique de factory
+- méthode createTaskDAO () → instance de DAO configurée
+en fonction des éléments de configurations du fichier
+properties.
+le code du programme principal AppliTaskDAO.main doit pouvoir ainsi charger Soit une
+TaskDAOMysql, soit une TaskDAOH2 de façon transparente à l’aide de la factory. (Rappel les deux
+classes TaskDAOH2 et TaskDAOMysql dérivent toutes les deux de TaskDAOAbstraite que vous
+avez/devez créer qui implémente à son tour TaskDAO).
+Ainsi le rôle de la Factory sera de charger soit, la DAO associée à la base H2 (hibernate), soit la DAO
+associée à la base Mysql en fonction du paramètre madao=TaskDAOMysql ou madao=TaskDAOH2 .
+Paramètre qui sera précisé dans le fichier application.properties.
+Aide : Pour lire ce fichier, vous pouvez vous aider de la partie 3 du cours vu ci-dessus.
+Exemple Fichier : application.properties
+madao=TaskDAOMysql
+dbuser=’sio’
+dbpasswd=’sio’
+dbname=’db_projet’
+dbport= 3306
+Travail à faire: Utiliser et tester
+3. Ecrivez le code de la classe AppliTaskDao qui charge la DAO, et qui propose une méthode qui affiche
+la liste des taches de l’agenda.
+4.Testez le bon fonctionnement en faisant varier la configuration, et répondez à cette question : Dans ce
+projet, est on obligé de recompiler le code pour changer de Base de données ?
